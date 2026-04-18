@@ -1,0 +1,2082 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recanto Joaninha — Galeria</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #f5f0e8;
+      --dark: #1a1a14;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --muted: #6b6b5a;
+      --card-bg: #ffffff;
+      --overlay: rgba(26, 26, 20, 0.85);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--cream);
+      color: var(--dark);
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: var(--dark);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('fotos/Piscina 1.jpeg');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.45;
+      transform: scale(1.05);
+      animation: heroZoom 12s ease-in-out infinite alternate;
+    }
+
+    @keyframes heroZoom {
+      from { transform: scale(1.05); }
+      to   { transform: scale(1.12); }
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(26,26,20,0.3) 0%, rgba(26,26,20,0.7) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 2rem;
+    }
+
+    .hero-tag {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.3s;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 10vw, 8rem);
+      font-weight: 300;
+      color: #fff;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.6s;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .hero-subtitle {
+      font-size: 0.8rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-top: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.9s;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 1.2s;
+      cursor: pointer;
+    }
+
+    .hero-scroll span {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.15); }
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(14, 14, 10, 0.97);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+      overflow: visible;
+    }
+
+    nav::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      animation: navShimmer 4s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    @keyframes navShimmer {
+      0%   { left: -60%; }
+      100% { left: 160%; }
+    }
+
+    .nav-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 1.5rem 0.2rem;
+      border-bottom: 1px solid rgba(201,168,76,0.08);
+    }
+
+    .nav-brand {
+      flex: 1;
+      text-align: center;
+    }
+
+    .nav-brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 2.5vw, 1.6rem);
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      color: #fff;
+      text-transform: uppercase;
+    }
+
+    .nav-brand-name em {
+      font-style: italic;
+      color: var(--gold-light);
+      font-weight: 400;
+    }
+
+    .nav-brand-dot {
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      margin: 0 0.7rem;
+      vertical-align: middle;
+      animation: dotPulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes dotPulse {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.5); }
+    }
+
+    /* Hamburger button */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      background: transparent;
+      border: 1px solid rgba(201,168,76,0.25);
+      cursor: pointer;
+      padding: 8px;
+      flex-shrink: 0;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 100%;
+      height: 1px;
+      background: var(--gold);
+      transition: transform 0.3s, opacity 0.3s;
+      transform-origin: center;
+    }
+
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    /* spacer to balance brand centering on desktop */
+    .nav-spacer { width: 36px; flex-shrink: 0; }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 0 1rem;
+      transition: max-height 0.4s ease, opacity 0.3s;
+    }
+
+    .nav-inner::-webkit-scrollbar { display: none; }
+
+    .nav-link {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      padding: 1rem 1rem;
+      white-space: nowrap;
+      transition: color 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
+      transform: translateX(-50%) scaleX(0);
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      transition: transform 0.25s ease, width 0.3s ease, opacity 0.3s;
+      opacity: 0;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .nav-link:hover { color: var(--gold-light); }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link:hover::before { opacity: 1; transform: translateX(-50%) scaleX(1); width: 6px; }
+
+    .nav-link.active { color: var(--gold); }
+    .nav-link.active::after { width: 70%; }
+
+    .nav-link-cta {
+      color: var(--gold) !important;
+      border: 1px solid rgba(201,168,76,0.35);
+      margin-left: 0.6rem;
+      padding: 0.45rem 1rem !important;
+      border-radius: 2px;
+      transition: background 0.3s, color 0.3s, border-color 0.3s !important;
+    }
+
+    .nav-link-cta:hover { background: var(--gold) !important; color: var(--dark) !important; border-color: var(--gold) !important; }
+    .nav-link-cta::after, .nav-link-cta::before { display: none !important; }
+
+    .nav-sep {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: rgba(201,168,76,0.2);
+      flex-shrink: 0;
+    }
+
+    /* ── MOBILE NAV ── */
+    @media (max-width: 768px) {
+      .nav-hamburger { display: flex; }
+      .nav-spacer { display: none; }
+
+      .nav-inner {
+        flex-direction: column;
+        align-items: stretch;
+        max-height: 0;
+        overflow: hidden;
+        padding: 0;
+        opacity: 0;
+      }
+
+      .nav-inner.open {
+        max-height: 600px;
+        opacity: 1;
+        padding: 0.5rem 0 1rem;
+      }
+
+      .nav-sep { display: none; }
+
+      .nav-link {
+        padding: 0.9rem 1.5rem;
+        font-size: 0.7rem;
+        border-bottom: 1px solid rgba(255,255,255,0.04);
+        overflow: visible;
+        text-align: center;
+      }
+
+      .nav-link::after, .nav-link::before { display: none; }
+
+      .nav-link-cta {
+        margin: 0.8rem 1.5rem 0 !important;
+        text-align: center;
+        display: block;
+        padding: 0.8rem !important;
+      }
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      padding: 6rem 2rem;
+      max-width: 1300px;
+      margin: 0 auto;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 3rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(26,26,20,0.12);
+    }
+
+    .section-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem;
+      font-weight: 300;
+      color: rgba(201,168,76,0.15);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      margin-right: 1.5rem;
+    }
+
+    .section-title-wrap {
+      flex: 1;
+    }
+
+    .section-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 300;
+      color: var(--dark);
+      line-height: 1;
+    }
+
+    .section-count {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      color: var(--muted);
+    }
+
+    /* ── GRIDS ── */
+    /* 1 photo */
+    .grid-1 {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    /* 2 photos */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    /* 3 photos */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .grid-3 .photo-item:first-child {
+      grid-row: 1 / 3;
+    }
+
+    /* 4 photos */
+    .grid-4 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    /* 5 photos */
+    .grid-5 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 1rem;
+    }
+
+    .grid-5 .photo-item:first-child {
+      grid-column: 1 / 3;
+    }
+
+    .grid-5 .photo-item:nth-child(2) {
+      grid-column: 3 / 4;
+    }
+
+    /* ── PHOTO ITEM ── */
+    .photo-item {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--dark);
+    }
+
+    .photo-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      min-height: 280px;
+      display: block;
+      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.5s ease;
+      opacity: 0.92;
+    }
+
+    .photo-item:hover img {
+      transform: scale(1.06);
+      opacity: 1;
+    }
+
+    .photo-hover {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(26,26,20,0.7) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      display: flex;
+      align-items: flex-end;
+      padding: 1.5rem;
+    }
+
+    .photo-item:hover .photo-hover {
+      opacity: 1;
+    }
+
+    .photo-hover-text {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .expand-icon {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 36px;
+      height: 36px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .photo-item:hover .expand-icon {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .expand-icon svg {
+      width: 14px;
+      height: 14px;
+      stroke: white;
+      fill: none;
+      stroke-width: 1.5;
+    }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .divider-line {
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(201,168,76,0.3), transparent);
+    }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(10, 10, 8, 0.97);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .lightbox.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .lightbox-img-wrap {
+      position: relative;
+      max-width: 90vw;
+      max-height: 88vh;
+      transform: scale(0.9);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .lightbox.open .lightbox-img-wrap {
+      transform: scale(1);
+    }
+
+    .lightbox-img-wrap img {
+      max-width: 90vw;
+      max-height: 85vh;
+      object-fit: contain;
+      display: block;
+    }
+
+    .lightbox-caption {
+      position: absolute;
+      bottom: -2.5rem;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .lightbox-close {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.3s, background 0.3s;
+      z-index: 10;
+    }
+
+    .lightbox-close:hover {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.1);
+    }
+
+    .lightbox-close svg {
+      width: 16px;
+      height: 16px;
+      stroke: white;
+      fill: none;
+      stroke-width: 1.5;
+    }
+
+    .lightbox-nav {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 50px;
+      height: 50px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    .lightbox-nav:hover {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.1);
+    }
+
+    .lightbox-nav svg {
+      width: 18px;
+      height: 18px;
+      stroke: white;
+      fill: none;
+      stroke-width: 1.5;
+    }
+
+    .lightbox-prev { left: 1.5rem; }
+    .lightbox-next { right: 1.5rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 3rem 2rem 2rem;
+      margin-top: 0;
+    }
+
+    .footer-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-sub {
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .footer-copy {
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.2);
+      margin-top: 1.5rem;
+    }
+
+    /* ── LOCATION SECTION ── */
+    .location-section {
+      background: var(--dark);
+      padding: 0 0 5rem;
+    }
+
+    .location-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .location-map-top {
+      width: 100%;
+      position: relative;
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+      padding: 2.5rem 2rem 0;
+      background: var(--dark);
+    }
+
+    .location-map-top iframe {
+      width: 100%;
+      height: 460px;
+      border: none;
+      display: block;
+      filter: grayscale(15%) contrast(1.05);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .location-info {
+      color: #fff;
+      padding: 3.5rem 2rem 0;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .location-tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .location-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 2rem;
+    }
+
+    .location-title em {
+      color: var(--gold-light);
+      font-style: italic;
+    }
+
+    .location-address {
+      font-size: 0.85rem;
+      line-height: 2;
+      color: rgba(255,255,255,0.6);
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 1.5rem 2rem;
+      margin-bottom: 1.5rem;
+      text-align: left;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .location-address strong {
+      color: var(--gold);
+      display: block;
+      font-weight: 500;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-top: 0.5rem;
+    }
+
+    .location-address strong:first-child { margin-top: 0; }
+
+    .location-obs {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.35);
+      font-style: italic;
+      line-height: 1.7;
+      margin-bottom: 1.8rem;
+    }
+
+    .map-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(14,14,10,0.85), transparent);
+      padding: 1.5rem 1rem 0.8rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-align: center;
+    }
+
+    .btn-phone {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.9rem 1.8rem;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-phone::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: translateX(-100%);
+      transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .btn-phone:hover::before { transform: translateX(0); }
+    .btn-phone:hover { color: var(--dark); }
+    .btn-phone span, .btn-phone svg { position: relative; z-index: 1; }
+
+    .btn-phone svg {
+      width: 16px; height: 16px;
+      stroke: currentColor; fill: none; stroke-width: 2;
+    }
+
+    .btn-whatsapp-contact {
+      border-color: #25d366 !important;
+      color: #25d366 !important;
+      margin-bottom: 1.8rem;
+    }
+
+    .btn-whatsapp-contact::before { background: #25d366 !important; }
+    .btn-whatsapp-contact:hover { color: #fff !important; }
+
+    .nav-link-loc {
+      border-color: rgba(180,140,60,0.35) !important;
+      margin-left: 0 !important;
+    }
+
+    /* ── COLLAPSIBLE CALENDAR ── */
+    .cal-toggle-wrap {
+      text-align: center;
+      padding: 3.5rem 1.5rem 4rem;
+      background: var(--dark);
+      border-top: 1px solid rgba(201,168,76,0.08);
+      border-bottom: 1px solid rgba(201,168,76,0.08);
+    }
+
+    .cal-toggle-tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+
+    .cal-toggle-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 300;
+      color: #fff;
+      margin-bottom: 0.6rem;
+    }
+
+    .cal-toggle-title em { color: var(--gold-light); font-style: italic; }
+
+    .cal-toggle-sub {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 2rem;
+    }
+
+    .btn-toggle-cal {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.95rem 2rem;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: color 0.3s;
+    }
+
+    .btn-toggle-cal::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: translateX(-100%);
+      transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+
+    .btn-toggle-cal:hover::before { transform: translateX(0); }
+    .btn-toggle-cal:hover { color: var(--dark); }
+    .btn-toggle-cal span, .btn-toggle-cal svg { position: relative; z-index: 1; }
+
+    .btn-toggle-cal svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+
+    .cal-collapsible {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+
+    .cal-collapsible.open {
+      max-height: 700px;
+    }
+
+    .cal-collapsible-inner {
+      padding: 2.5rem 1.5rem 0;
+    }
+
+    /* mobile calendar cells */
+    @media (max-width: 480px) {
+      .cal-grid td { height: 40px; font-size: 0.75rem; }
+      .cal-grid th { font-size: 0.5rem; letter-spacing: 0.1em; }
+      .booked-label { font-size: 0.38rem; }
+      .cal-month-label { font-size: 1.1rem; min-width: 160px; }
+      .weather-cards { gap: 0.3rem; }
+      .weather-card { min-width: 58px; padding: 0.5rem 0.4rem; }
+      .weather-card .wc-icon { font-size: 1.3rem; }
+      .weather-card .wc-temp { font-size: 1rem; }
+      .weather-card .wc-desc { font-size: 0.52rem; }
+      .location-map-top iframe { height: 240px; }
+      .location-address { padding: 1rem 1.2rem; font-size: 0.78rem; }
+      .btn-phone { flex-direction: column; gap: 0.4rem; text-align: center; }
+    }
+    .calendar-section {
+      background: var(--dark);
+      padding: 4rem 2rem 5rem;
+      border-top: 1px solid rgba(201,168,76,0.1);
+    }
+
+    .calendar-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .calendar-tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+
+    .calendar-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 300;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .calendar-title em { color: var(--gold-light); font-style: italic; }
+
+    .calendar-sub {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+    }
+
+    .calendar-legend {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+    }
+
+    .legend-dot.available  { background: rgba(201,168,76,0.2); border: 1px solid rgba(201,168,76,0.4); }
+    .legend-dot.booked     { background: rgba(220,60,60,0.25); border: 1px solid rgba(220,60,60,0.5); }
+    .legend-dot.today      { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.4); }
+
+    .cal-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .cal-nav-btn {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(201,168,76,0.3);
+      background: transparent;
+      color: var(--gold);
+      cursor: pointer;
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+      font-size: 1rem;
+    }
+
+    .cal-nav-btn:hover { background: rgba(201,168,76,0.1); }
+
+    .cal-month-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 300;
+      color: #fff;
+      letter-spacing: 0.05em;
+      min-width: 200px;
+    }
+
+    .cal-grid {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 4px;
+    }
+
+    .cal-grid th {
+      font-size: 0.58rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      padding: 0.5rem 0;
+      font-weight: 500;
+    }
+
+    .cal-grid td {
+      height: 52px;
+      width: calc(100% / 7);
+      text-align: center;
+      vertical-align: middle;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.6);
+      cursor: default;
+      transition: background 0.2s;
+      position: relative;
+    }
+
+    .cal-grid td.empty { background: transparent; }
+
+    .cal-grid td.past {
+      color: rgba(255,255,255,0.15);
+      background: transparent;
+    }
+
+    .cal-grid td.today-cell {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .cal-grid td.available-cell {
+      background: rgba(201,168,76,0.08);
+      border: 1px solid rgba(201,168,76,0.2);
+      color: rgba(255,255,255,0.8);
+    }
+
+    .cal-grid td.booked-cell {
+      background: rgba(220,60,60,0.12);
+      border: 1px solid rgba(220,60,60,0.3);
+      color: rgba(255,255,255,0.35);
+    }
+
+    .cal-grid td.booked-cell::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px; height: 1px;
+      background: rgba(220,60,60,0.5);
+    }
+
+    .booked-label {
+      display: block;
+      font-size: 0.45rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(220,90,90,0.7);
+      margin-top: 2px;
+    }
+
+    .cal-cta {
+      margin-top: 2rem;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.35);
+    }
+
+    .cal-cta a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    /* ── WEATHER ── */
+    .weather-block {
+      margin-top: 0.5rem;
+    }
+
+    .weather-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .weather-cards {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .weather-loading {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.3);
+      font-style: italic;
+    }
+
+    .weather-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(201,168,76,0.12);
+      padding: 0.8rem 1rem;
+      min-width: 80px;
+      text-align: center;
+      transition: background 0.3s, border-color 0.3s;
+      cursor: default;
+    }
+
+    .weather-card:hover {
+      background: rgba(201,168,76,0.08);
+      border-color: rgba(201,168,76,0.3);
+    }
+
+    .weather-card .wc-day {
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+
+    .weather-card .wc-icon {
+      font-size: 1.6rem;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .weather-card .wc-temp {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .weather-card .wc-temp span {
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .weather-card .wc-desc {
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.4);
+      margin-top: 0.3rem;
+      line-height: 1.3;
+    }
+
+    .weather-error {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.3);
+      font-style: italic;
+    }
+
+    .weather-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.8rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-decoration: none;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+    }
+    .weather-link:hover { opacity: 1; }
+    /* ── WHATSAPP FLOAT ── */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      text-decoration: none;
+      animation: waBounce 2.5s ease-in-out infinite;
+    }
+
+    @keyframes waBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .whatsapp-float:hover { animation: none; transform: scale(1.08); }
+
+    .wa-label {
+      background: #25d366;
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      padding: 0.55rem 1rem;
+      border-radius: 30px;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateX(10px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .whatsapp-float:hover .wa-label {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .wa-btn {
+      width: 58px;
+      height: 58px;
+      background: #25d366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 24px rgba(37,211,102,0.45), 0 0 0 0 rgba(37,211,102,0.4);
+      animation: waPulseRing 2s ease-out infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes waPulseRing {
+      0%   { box-shadow: 0 6px 24px rgba(37,211,102,0.45), 0 0 0 0 rgba(37,211,102,0.4); }
+      70%  { box-shadow: 0 6px 24px rgba(37,211,102,0.45), 0 0 0 16px rgba(37,211,102,0); }
+      100% { box-shadow: 0 6px 24px rgba(37,211,102,0.45), 0 0 0 0 rgba(37,211,102,0); }
+    }
+
+    .wa-btn svg {
+      width: 30px;
+      height: 30px;
+      fill: #fff;
+    }
+
+    @media (max-width: 768px) {
+      .location-map-top iframe { height: 300px; }
+      .location-info { padding: 2.5rem 1.2rem 0; }
+      .wa-label { display: none; }
+      .weather-cards { gap: 0.4rem; }
+      .weather-card { min-width: 68px; padding: 0.6rem 0.5rem; }
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE GRIDS ── */
+    @media (max-width: 768px) {
+      .grid-2, .grid-3, .grid-4, .grid-5 {
+        grid-template-columns: 1fr !important;
+        grid-template-rows: auto !important;
+      }
+
+      .grid-3 .photo-item:first-child,
+      .grid-5 .photo-item:first-child,
+      .grid-5 .photo-item:nth-child(2) {
+        grid-column: auto;
+        grid-row: auto;
+      }
+
+      .section-header {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .section-number {
+        font-size: 3rem;
+        margin-right: 0.8rem;
+      }
+
+      .lightbox-prev { left: 0.5rem; }
+      .lightbox-next { right: 0.5rem; }
+
+      .section { padding: 3.5rem 1.2rem; }
+
+      .btn-phone { font-size: 0.68rem; padding: 0.8rem 1.2rem; width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-tag">Galeria de Fotos</p>
+      <h1 class="hero-title">Recanto<br><em>Joaninha</em></h1>
+      <p class="hero-subtitle">Conheça cada cantinho deste espaço</p>
+    </div>
+    <div class="hero-scroll" onclick="document.getElementById('entrada').scrollIntoView({behavior:'smooth'})">
+      <span>Explorar</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-top">
+      <div class="nav-spacer"></div>
+      <div class="nav-brand">
+        <span class="nav-brand-name"><em>Recanto</em><span class="nav-brand-dot"></span>Joaninha</span>
+      </div>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-inner" id="navInner">
+      <a class="nav-link" href="#entrada">Entrada</a>
+      <div class="nav-sep"></div>
+      <a class="nav-link" href="#piscina">Piscina</a>
+      <div class="nav-sep"></div>
+      <a class="nav-link" href="#varanda">Varanda</a>
+      <div class="nav-sep"></div>
+      <a class="nav-link" href="#salao">Salão</a>
+      <div class="nav-sep"></div>
+      <a class="nav-link" href="#quarto">Quarto</a>
+      <div class="nav-sep"></div>
+      <a class="nav-link" href="#banheiro">Banheiro</a>
+      <div class="nav-sep"></div>
+      <a class="nav-link" href="#churrasqueira">Churrasqueira</a>
+      <div class="nav-sep"></div>
+      <a class="nav-link" href="#campo">Campo</a>
+      <div class="nav-sep"></div>
+      <a class="nav-link nav-link-cta" href="#disponibilidade">
+        <svg viewBox="0 0 24 24" width="11" height="11" stroke="currentColor" fill="none" stroke-width="2" style="vertical-align:middle;margin-right:5px"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Disponibilidade
+      </a>
+      <div class="nav-sep"></div>
+      <a class="nav-link nav-link-cta nav-link-loc" href="#localizacao">
+        <svg viewBox="0 0 24 24" width="11" height="11" stroke="currentColor" fill="none" stroke-width="2" style="vertical-align:middle;margin-right:5px"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Localização
+      </a>
+    </div>
+  </nav>
+
+  <!-- ENTRADA -->
+  <section class="section" id="entrada">
+    <div class="section-header">
+      <div class="section-number">01</div>
+      <div class="section-title-wrap">
+        <p class="section-label">Bem-vindo</p>
+        <h2 class="section-title">Entrada</h2>
+      </div>
+      <span class="section-count">3 fotos</span>
+    </div>
+    <div class="grid-3 photo-grid">
+      <div class="photo-item" data-section="entrada" data-index="0">
+        <img src="fotos/Entrada 1.jpeg" alt="Entrada 1" loading="lazy">
+        <div class="photo-hover"><span class="photo-hover-text">Entrada — 1</span></div>
+        <div class="expand-icon"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+      <div class="photo-item" data-section="entrada" data-index="1">
+        <img src="fotos/Entrada 2.jpeg" alt="Entrada 2" loading="lazy">
+        <div class="photo-hover"><span class="photo-hover-text">Entrada — 2</span></div>
+        <div class="expand-icon"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+      <div class="photo-item" data-section="entrada" data-index="2">
+        <img src="fotos/Entrada 3.jpeg" alt="Entrada 3" loading="lazy">
+        <div class="photo-hover"><span class="photo-hover-text">Entrada — 3</span></div>
+        <div class="expand-icon"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"><div class="divider-line"></div></div>
+
+  <!-- PISCINA -->
+  <section class="section" id="piscina">
+    <div class="section-header">
+      <div class="section-number">02</div>
+      <div class="section-title-wrap">
+        <p class="section-label">Lazer & Refrescância</p>
+        <h2 class="section-title">Piscina</h2>
+      </div>
+      <span class="section-count">5 fotos</span>
+    </div>
+    <div class="grid-5 photo-grid">
+      <div class="photo-item" data-section="piscina" data-index="0">
+        <img src="fotos/Piscina 1.jpeg" alt="Piscina 1" loading="lazy">
+        <div class="photo-hover"><span class="photo-hover-text">Piscina — 1</span></div>
+        <div class="expand-icon"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+      <div class="photo-item" data-section="piscina" data-index="1">
+        <img src="fotos/Piscina 2.jpeg" alt="Piscina 2" loading="lazy">
+        <div class="photo-hover"><span class="photo-hover-text">Piscina — 2</span></div>
+        <div class="expand-icon"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+      <div class="photo-item" data-section="piscina" data-index="2">
+        <img src="fotos/Piscina 3.jpeg" alt="Piscina 3" loading="lazy">
+        <div class="photo-hover"><span class="photo-hover-text">Piscina — 3</span></div>
+        <div class="expand-icon"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+      <div class="photo-item" data-section="piscina" data-index="3">
+        <img src="fotos/Piscina 4.jpeg" alt="Piscina 4" loading="lazy">
+        <div class="photo-hover"><span class="photo-hover-text">Piscina — 4</span></div>
+        <div class="expand-icon"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+      <div class="photo-item" data-section="piscina" data-index="4">
+        <img src="fotos/Piscina 5.jpeg" alt="Piscina 5" loading="lazy">
+        <div class="photo-hover"><span class="photo-hover-text">Piscina — 5</span></div>
+        <div class="expand-icon"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"><div class="divider-line"></div></div>
+
+  <!-- VARANDA -->
+  <section class="section" id="varanda">
+    <div class="section-header">
+      <div class="section-number">03</div>
+      <div class="section-title-wrap">
+        <p class="section-label">Ar Livre & Vista</p>
+        <h2 class="section-title">Varanda</h2>
+      </div>
+      <span class="section-count">4 fotos</span>
+    </div>
+    <div class="grid-4 photo-grid">
+      <div class="photo-item" data-section="varanda" data-index="0">
+        <img src="fotos/Varanda 1.jpeg" alt="Varanda 1" loading="lazy">
+        <div class="photo-hover"><span class="photo-hover-text">Varanda — 1</span></div>
+        <div class="expand-icon"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+      <div class="photo-item" data-section="varanda" data-index="1">
+        <img src="fotos/Varanda 2.jpeg" alt="Varanda 2" loading="lazy">
+        <div class="photo-hover"><span class="photo-hover-text">Varanda — 2</span></div>
+        <div class="expand-icon"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+      <div class="photo-item" data-section="varanda" data-index="2">
+        <img src="fotos/Varanda 3.jpeg" alt="Varanda 3" loading="lazy">
+        <div class="photo-hover"><span class="photo-hover-text">Varanda — 3</span></div>
+        <div class="expand-icon"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+      <div class="photo-item" data-section="varanda" data-index="3">
+        <img src="fotos/Varanda 4.jpeg" alt="Varanda 4" loading="lazy">
+        <div class="photo-hover"><span class="photo-hover-text">Varanda — 4</span></div>
+        <div class="expand-icon"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"><div class="divider-line"></div></div>
+
+  <!-- SALÃO -->
+  <section class="section" id="salao">
+    <div class="section-header">
+      <div class="section-number">04</div>
+      <div class="section-title-wrap">
+        <p class="section-label">Espaço Social</p>
+        <h2 class="section-title">Salão</h2>
+      </div>
+      <span class="section-count">2 fotos</span>
+    </div>
+    <div class="grid-2 photo-grid">
+      <div class="photo-item" data-section="salao" data-index="0">
+        <img src="fotos/Salão 1.jpeg" alt="Salão 1" loading="lazy">
+        <div class="photo-hover"><span class="photo-hover-text">Salão — 1</span></div>
+        <div class="expand-icon"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+      <div class="photo-item" data-section="salao" data-index="1">
+        <img src="fotos/Salão 2.jpeg" alt="Salão 2" loading="lazy">
+        <div class="photo-hover"><span class="photo-hover-text">Salão — 2</span></div>
+        <div class="expand-icon"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"><div class="divider-line"></div></div>
+
+  <!-- QUARTO -->
+  <section class="section" id="quarto">
+    <div class="section-header">
+      <div class="section-number">05</div>
+      <div class="section-title-wrap">
+        <p class="section-label">Descanso & Conforto</p>
+        <h2 class="section-title">Quarto</h2>
+      </div>
+      <span class="section-count">3 fotos</span>
+    </div>
+    <div class="grid-3 photo-grid">
+      <div class="photo-item" data-section="quarto" data-index="0">
+        <img src="fotos/Quarto 1.jpeg" alt="Quarto 1" loading="lazy">
+        <div class="photo-hover"><span class="photo-hover-text">Quarto — 1</span></div>
+        <div class="expand-icon"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+      <div class="photo-item" data-section="quarto" data-index="1">
+        <img src="fotos/Quarto 2.jpeg" alt="Quarto 2" loading="lazy">
+        <div class="photo-hover"><span class="photo-hover-text">Quarto — 2</span></div>
+        <div class="expand-icon"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+      <div class="photo-item" data-section="quarto" data-index="2">
+        <img src="fotos/Quarto 3.jpeg" alt="Quarto 3" loading="lazy">
+        <div class="photo-hover"><span class="photo-hover-text">Quarto — 3</span></div>
+        <div class="expand-icon"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"><div class="divider-line"></div></div>
+
+  <!-- BANHEIRO -->
+  <section class="section" id="banheiro">
+    <div class="section-header">
+      <div class="section-number">06</div>
+      <div class="section-title-wrap">
+        <p class="section-label">Higiene & Cuidado</p>
+        <h2 class="section-title">Banheiro</h2>
+      </div>
+      <span class="section-count">2 fotos</span>
+    </div>
+    <div class="grid-2 photo-grid">
+      <div class="photo-item" data-section="banheiro" data-index="0">
+        <img src="fotos/Banheiro 1.jpeg" alt="Banheiro 1" loading="lazy">
+        <div class="photo-hover"><span class="photo-hover-text">Banheiro — 1</span></div>
+        <div class="expand-icon"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+      <div class="photo-item" data-section="banheiro" data-index="1">
+        <img src="fotos/Banheiro 2.jpeg" alt="Banheiro 2" loading="lazy">
+        <div class="photo-hover"><span class="photo-hover-text">Banheiro — 2</span></div>
+        <div class="expand-icon"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"><div class="divider-line"></div></div>
+
+  <!-- CHURRASQUEIRA -->
+  <section class="section" id="churrasqueira">
+    <div class="section-header">
+      <div class="section-number">07</div>
+      <div class="section-title-wrap">
+        <p class="section-label">Sabor & Reunião</p>
+        <h2 class="section-title">Churrasqueira</h2>
+      </div>
+      <span class="section-count">2 fotos</span>
+    </div>
+    <div class="grid-2 photo-grid">
+      <div class="photo-item" data-section="churrasqueira" data-index="0">
+        <img src="fotos/Churrasqueira 1.jpeg" alt="Churrasqueira 1" loading="lazy">
+        <div class="photo-hover"><span class="photo-hover-text">Churrasqueira — 1</span></div>
+        <div class="expand-icon"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+      <div class="photo-item" data-section="churrasqueira" data-index="1">
+        <img src="fotos/Churrasqueira 2.jpeg" alt="Churrasqueira 2" loading="lazy">
+        <div class="photo-hover"><span class="photo-hover-text">Churrasqueira — 2</span></div>
+        <div class="expand-icon"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"><div class="divider-line"></div></div>
+
+  <!-- CAMPO -->
+  <section class="section" id="campo">
+    <div class="section-header">
+      <div class="section-number">08</div>
+      <div class="section-title-wrap">
+        <p class="section-label">Natureza & Espaço</p>
+        <h2 class="section-title">Campo</h2>
+      </div>
+      <span class="section-count">1 foto</span>
+    </div>
+    <div class="grid-1 photo-grid">
+      <div class="photo-item" data-section="campo" data-index="0" style="max-height:520px;">
+        <img src="fotos/Campo 1.jpeg" alt="Campo 1" loading="lazy" style="min-height:400px;max-height:520px;">
+        <div class="photo-hover"><span class="photo-hover-text">Campo — 1</span></div>
+        <div class="expand-icon"><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALENDÁRIO DE DISPONIBILIDADE -->
+  <section class="cal-toggle-wrap" id="disponibilidade">
+    <p class="cal-toggle-tag">📅 Disponibilidade</p>
+    <h2 class="cal-toggle-title">Datas <em>Disponíveis</em></h2>
+    <p class="cal-toggle-sub">Clique para ver o calendário atualizado</p>
+    <button class="btn-toggle-cal" id="btnToggleCal">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span id="btnToggleLabel">Ver Datas Disponíveis</span>
+    </button>
+
+    <div class="cal-collapsible" id="calCollapsible">
+      <div class="cal-collapsible-inner">
+        <div class="calendar-inner">
+          <div class="calendar-legend">
+            <div class="legend-item"><div class="legend-dot available"></div> Disponível</div>
+            <div class="legend-item"><div class="legend-dot booked"></div> Reservado</div>
+            <div class="legend-item"><div class="legend-dot today"></div> Hoje</div>
+          </div>
+
+          <div class="cal-nav">
+            <button class="cal-nav-btn" id="calPrev">&#8249;</button>
+            <div class="cal-month-label" id="calMonthLabel"></div>
+            <button class="cal-nav-btn" id="calNext">&#8250;</button>
+          </div>
+
+          <table class="cal-grid">
+            <thead>
+              <tr>
+                <th>Dom</th><th>Seg</th><th>Ter</th><th>Qua</th><th>Qui</th><th>Sex</th><th>Sáb</th>
+              </tr>
+            </thead>
+            <tbody id="calBody"></tbody>
+          </table>
+
+          <p class="cal-cta" style="margin-bottom:0.5rem">Gostou de uma data? <a href="https://wa.me/5511980722654?text=Ol%C3%A1%21+Gostaria+de+verificar+disponibilidade+e+reservar+uma+data+no+Recanto+Joaninha+%F0%9F%8C%BF" target="_blank">Fale no WhatsApp ↗</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"><div class="divider-line"></div></div>
+
+  <!-- LOCALIZAÇÃO & CONTATO -->
+  <section class="location-section" id="localizacao">
+    <div class="location-inner">
+      <div class="location-map-top">
+        <iframe
+          src="https://www.google.com/maps?q=-23.351200,-46.589100&z=17&output=embed"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Localização Recanto Joaninha">
+        </iframe>
+        <div class="map-label">Recanto Joaninha — Mairiporã, SP</div>
+      </div>
+
+      <div class="location-info">
+        <p class="location-tag">Como chegar</p>
+        <h2 class="location-title">Venha nos <em>visitar</em></h2>
+        <div class="location-address">
+          <strong>📍 Endereço</strong>
+          Rua Silvestre, 683<br>
+          Paraíso da Cantareira — Mairiporã, SP
+          <strong style="margin-top:0.8rem">🗺 Referência</strong>
+          Ao lado do túnel da Fernão Dias<br>
+          Atrás do Graal
+        </div>
+        <p class="location-obs">Coordenadas GPS: 23°21'04.3"S 46°35'20.8"W</p>
+
+        <a class="btn-phone btn-whatsapp-contact"
+           href="https://wa.me/5511980722654?text=Ol%C3%A1%21+Gostaria+de+verificar+disponibilidade+e+reservar+uma+data+no+Recanto+Joaninha+%F0%9F%8C%BF"
+           target="_blank" rel="noopener">
+          <svg viewBox="0 0 32 32" width="18" height="18" style="position:relative;z-index:1;fill:currentColor;flex-shrink:0"><path d="M16.002 3C9.373 3 4 8.373 4 15.002c0 2.195.592 4.35 1.715 6.235L4 29l7.98-1.687A12.93 12.93 0 0 0 16.002 28C22.63 28 28 22.627 28 15.998 28 9.373 22.63 3 16.002 3zm0 23.6c-1.97 0-3.9-.527-5.59-1.527l-.4-.237-4.736 1.002 1.02-4.616-.26-.41A10.56 10.56 0 0 1 4.6 15.002c0-6.285 5.115-11.4 11.4-11.4 6.284 0 11.398 5.115 11.398 11.4 0 6.283-5.114 11.398-11.397 11.398zm6.245-8.533c-.342-.17-2.02-1-2.334-1.113-.313-.112-.54-.17-.768.17-.228.34-.883 1.113-1.082 1.34-.2.228-.398.256-.74.086-.342-.172-1.444-.534-2.75-1.7-1.016-.908-1.703-2.03-1.903-2.372-.2-.34-.02-.525.15-.694.154-.152.342-.398.513-.598.17-.2.228-.342.342-.568.113-.228.057-.427-.029-.598-.085-.17-.767-1.85-1.052-2.535-.277-.667-.558-.576-.768-.586l-.654-.01c-.228 0-.597.086-.91.427-.312.342-1.194 1.167-1.194 2.847s1.222 3.3 1.393 3.528c.17.228 2.405 3.672 5.826 5.15.814.352 1.449.562 1.944.72.816.26 1.558.224 2.145.136.654-.098 2.02-.826 2.305-1.624.285-.797.285-1.48.199-1.623-.085-.143-.313-.228-.655-.4z"/></svg>
+          <span>(11) 98072-2654 — Falar no WhatsApp</span>
+        </a>
+
+        <!-- PREVISÃO DO TEMPO -->
+        <div class="weather-block">
+          <p class="weather-label">
+            <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z"/></svg>
+            Previsão do tempo — Mairiporã, SP
+          </p>
+          <div id="weather-widget" class="weather-cards">
+            <div class="weather-loading">Carregando previsão...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-title">Recanto Joaninha</div>
+    <p class="footer-sub">Mairiporã, São Paulo</p>
+    <p class="footer-copy">© 2025 Recanto Joaninha · Todos os direitos reservados</p>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a class="whatsapp-float"
+     href="https://wa.me/5511980722654?text=Ol%C3%A1%21+Gostaria+de+verificar+disponibilidade+e+reservar+uma+data+no+Recanto+Joaninha+%F0%9F%8C%BF"
+     target="_blank"
+     rel="noopener"
+     aria-label="Falar no WhatsApp">
+    <span class="wa-label">Reservar agora</span>
+    <div class="wa-btn">
+      <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16.002 3C9.373 3 4 8.373 4 15.002c0 2.195.592 4.35 1.715 6.235L4 29l7.98-1.687A12.93 12.93 0 0 0 16.002 28C22.63 28 28 22.627 28 15.998 28 9.373 22.63 3 16.002 3zm0 23.6c-1.97 0-3.9-.527-5.59-1.527l-.4-.237-4.736 1.002 1.02-4.616-.26-.41A10.56 10.56 0 0 1 4.6 15.002c0-6.285 5.115-11.4 11.4-11.4 6.284 0 11.398 5.115 11.398 11.4 0 6.283-5.114 11.398-11.397 11.398zm6.245-8.533c-.342-.17-2.02-1-2.334-1.113-.313-.112-.54-.17-.768.17-.228.34-.883 1.113-1.082 1.34-.2.228-.398.256-.74.086-.342-.172-1.444-.534-2.75-1.7-1.016-.908-1.703-2.03-1.903-2.372-.2-.34-.02-.525.15-.694.154-.152.342-.398.513-.598.17-.2.228-.342.342-.568.113-.228.057-.427-.029-.598-.085-.17-.767-1.85-1.052-2.535-.277-.667-.558-.576-.768-.586l-.654-.01c-.228 0-.597.086-.91.427-.312.342-1.194 1.167-1.194 2.847s1.222 3.3 1.393 3.528c.17.228 2.405 3.672 5.826 5.15.814.352 1.449.562 1.944.72.816.26 1.558.224 2.145.136.654-.098 2.02-.826 2.305-1.624.285-.797.285-1.48.199-1.623-.085-.143-.313-.228-.655-.4z"/>
+      </svg>
+    </div>
+  </a>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lbClose">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <button class="lightbox-nav lightbox-prev" id="lbPrev">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="lightbox-img-wrap">
+      <img id="lbImg" src="" alt="">
+      <div class="lightbox-caption" id="lbCaption"></div>
+    </div>
+    <button class="lightbox-nav lightbox-next" id="lbNext">
+      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+
+  <script>
+    // ── SCROLL REVEAL ──
+    const sections = document.querySelectorAll('.section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    sections.forEach(s => observer.observe(s));
+
+    // ── LIGHTBOX ──
+    const sectionPhotos = {};
+
+    document.querySelectorAll('.photo-item').forEach(item => {
+      const sec = item.dataset.section;
+      const idx = parseInt(item.dataset.index);
+      if (!sectionPhotos[sec]) sectionPhotos[sec] = [];
+      sectionPhotos[sec][idx] = {
+        src: item.querySelector('img').src,
+        alt: item.querySelector('img').alt
+      };
+    });
+
+    let currentSection = '';
+    let currentIndex = 0;
+
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbCaption = document.getElementById('lbCaption');
+
+    function openLightbox(sec, idx) {
+      currentSection = sec;
+      currentIndex = idx;
+      const photo = sectionPhotos[sec][idx];
+      lbImg.src = photo.src;
+      lbCaption.textContent = photo.alt;
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function navigate(dir) {
+      const photos = sectionPhotos[currentSection];
+      currentIndex = (currentIndex + dir + photos.length) % photos.length;
+      const photo = photos[currentIndex];
+      lbImg.style.opacity = '0';
+      lbImg.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        lbImg.src = photo.src;
+        lbCaption.textContent = photo.alt;
+        lbImg.style.opacity = '1';
+        lbImg.style.transform = 'scale(1)';
+      }, 180);
+    }
+
+    lbImg.style.transition = 'opacity 0.18s ease, transform 0.18s ease';
+
+    document.querySelectorAll('.photo-item').forEach(item => {
+      item.addEventListener('click', () => {
+        openLightbox(item.dataset.section, parseInt(item.dataset.index));
+      });
+    });
+
+    document.getElementById('lbClose').addEventListener('click', closeLightbox);
+    document.getElementById('lbPrev').addEventListener('click', () => navigate(-1));
+    document.getElementById('lbNext').addEventListener('click', () => navigate(1));
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') navigate(-1);
+      if (e.key === 'ArrowRight') navigate(1);
+    });
+
+    // ── STAGGERED PHOTO ENTRY ──
+    const photoObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          const items = entry.target.querySelectorAll('.photo-item');
+          items.forEach((item, i) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(24px)';
+            item.style.transition = `opacity 0.6s ease ${i * 0.1}s, transform 0.6s ease ${i * 0.1}s`;
+            setTimeout(() => {
+              item.style.opacity = '1';
+              item.style.transform = 'translateY(0)';
+            }, 50);
+          });
+          photoObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.photo-grid').forEach(grid => {
+      photoObserver.observe(grid);
+    });
+
+    // ── ACTIVE NAV LINK ON SCROLL ──
+    const navLinks = document.querySelectorAll('.nav-link');
+    const contentSections = document.querySelectorAll('section[id]');
+
+    const activeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    contentSections.forEach(s => activeObserver.observe(s));
+
+    // ── HAMBURGER MENU ──
+    const hamburger = document.getElementById('navHamburger');
+    const navInner  = document.getElementById('navInner');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      navInner.classList.toggle('open');
+    });
+
+    // Close menu when a link is clicked
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        navInner.classList.remove('open');
+      });
+    });
+
+    // ── CALENDAR TOGGLE ──
+    const btnToggle   = document.getElementById('btnToggleCal');
+    const calCollapse = document.getElementById('calCollapsible');
+    const btnLabel    = document.getElementById('btnToggleLabel');
+    let calOpen = false;
+
+    btnToggle.addEventListener('click', () => {
+      calOpen = !calOpen;
+      calCollapse.classList.toggle('open', calOpen);
+      btnLabel.textContent = calOpen ? 'Fechar Calendário' : 'Ver Datas Disponíveis';
+      if (calOpen) {
+        setTimeout(() => {
+          calCollapse.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 150);
+      }
+    });
+
+    // ── CALENDAR — JSONBin.io (nuvem) ──
+    const JSONBIN_ID  = '69e2b558aaba8821970edb11';
+    const JSONBIN_URL = 'https://api.jsonbin.io/v3/b/' + JSONBIN_ID + '/latest';
+
+    let bookedDatesGlobal = [];
+
+    let calDate = new Date();
+    calDate.setDate(1);
+
+    const MONTHS_PT = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+    function renderCalendar() {
+      const booked = bookedDatesGlobal;
+      const today = new Date();
+      today.setHours(0,0,0,0);
+
+      const year  = calDate.getFullYear();
+      const month = calDate.getMonth();
+
+      document.getElementById('calMonthLabel').textContent = MONTHS_PT[month] + ' ' + year;
+
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      const tbody = document.getElementById('calBody');
+      tbody.innerHTML = '';
+
+      let day = 1;
+      for (let row = 0; row < 6; row++) {
+        const tr = document.createElement('tr');
+        for (let col = 0; col < 7; col++) {
+          const td = document.createElement('td');
+          if (row === 0 && col < firstDay || day > daysInMonth) {
+            td.className = 'empty';
+          } else {
+            const dateStr = year + '-' + String(month+1).padStart(2,'0') + '-' + String(day).padStart(2,'0');
+            const cellDate = new Date(year, month, day);
+            cellDate.setHours(0,0,0,0);
+
+            const isToday  = cellDate.getTime() === today.getTime();
+            const isPast   = cellDate < today;
+            const isBooked = booked.includes(dateStr);
+
+            if (isPast && !isToday) {
+              td.className = 'past';
+              td.textContent = day;
+            } else if (isBooked) {
+              td.className = 'booked-cell';
+              td.innerHTML = day + '<span class="booked-label">Reservado</span>';
+            } else if (isToday) {
+              td.className = 'today-cell';
+              td.textContent = day;
+            } else {
+              td.className = 'available-cell';
+              td.textContent = day;
+            }
+            day++;
+          }
+          tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+        if (day > daysInMonth) break;
+      }
+    }
+
+    const JSONBIN_MASTER = '$2a$10$MzSg/sQ3ffKiGHedsmdYj.ypSzmNiwRn1h63nv9ca0BBu6qv6jLyO';
+
+    function loadDates() {
+      fetch(JSONBIN_URL, {
+        headers: { 'X-Master-Key': JSONBIN_MASTER }
+      })
+        .then(function(r){ return r.json(); })
+        .then(function(data){
+          bookedDatesGlobal = (data.record && data.record.reservadas) ? data.record.reservadas : [];
+          renderCalendar();
+        })
+        .catch(function(){ bookedDatesGlobal = []; renderCalendar(); });
+    }
+
+    document.getElementById('calPrev').addEventListener('click', function() {
+      calDate.setMonth(calDate.getMonth() - 1);
+      renderCalendar();
+    });
+
+    document.getElementById('calNext').addEventListener('click', function() {
+      calDate.setMonth(calDate.getMonth() + 1);
+      renderCalendar();
+    });
+
+    loadDates();
+
+    // ── WEATHER — Open-Meteo (sem API key) ──
+    (async function loadWeather() {
+      const widget = document.getElementById('weather-widget');
+      if (!widget) return;
+
+      const WMO = {
+        0:  ['☀️','Céu limpo'],   1:  ['🌤','Poucas nuvens'],
+        2:  ['⛅','Nublado'],     3:  ['☁️','Encoberto'],
+        45: ['🌫','Névoa'],       48: ['🌫','Névoa com gelo'],
+        51: ['🌦','Garoa leve'],  53: ['🌦','Garoa'],       55: ['🌧','Garoa forte'],
+        61: ['🌧','Chuva leve'],  63: ['🌧','Chuva'],       65: ['🌧','Chuva forte'],
+        71: ['🌨','Neve leve'],   73: ['❄️','Neve'],        75: ['❄️','Neve forte'],
+        80: ['🌦','Pancadas'],    81: ['⛈','Tempestade'],  82: ['⛈','Tempestade forte'],
+        95: ['⛈','Trovoada'],    99: ['⛈','Granizo'],
+      };
+
+      const DAYS_PT = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+
+      try {
+        const url = 'https://api.open-meteo.com/v1/forecast?latitude=-23.3554&longitude=-46.5583&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=America%2FSao_Paulo&forecast_days=7';
+        const res = await fetch(url);
+        const data = await res.json();
+        const { time, weathercode, temperature_2m_max, temperature_2m_min } = data.daily;
+
+        widget.innerHTML = '';
+        time.forEach((dateStr, i) => {
+          const date = new Date(dateStr + 'T12:00:00');
+          const dow  = i === 0 ? 'Hoje' : i === 1 ? 'Amanhã' : DAYS_PT[date.getDay()];
+          const code = weathercode[i];
+          const [icon, desc] = WMO[code] || ['🌡️', 'Variável'];
+          const max  = Math.round(temperature_2m_max[i]);
+          const min  = Math.round(temperature_2m_min[i]);
+
+          const card = document.createElement('div');
+          card.className = 'weather-card';
+          card.innerHTML = `
+            <div class="wc-day">${dow}</div>
+            <div class="wc-icon">${icon}</div>
+            <div class="wc-temp">${max}° <span>/ ${min}°</span></div>
+            <div class="wc-desc">${desc}</div>
+          `;
+          widget.appendChild(card);
+        });
+
+        const link = document.createElement('a');
+        link.className = 'weather-link';
+        link.href = 'https://weather.com/pt-BR/weather/tenday/l/-23.36,-46.56';
+        link.target = '_blank';
+        link.innerHTML = '↗ Previsão detalhada';
+        widget.insertAdjacentElement('afterend', link);
+
+      } catch (e) {
+        widget.innerHTML = '<span class="weather-error">Não foi possível carregar a previsão agora.</span>';
+      }
+    })();
+  </script>
+</body>
+</html>

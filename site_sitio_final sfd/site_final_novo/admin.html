@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Recanto Joaninha</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #f5f0e8;
+      --dark: #1a1a14;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --red: #dc3c3c;
+      --green: #25a05a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #111109;
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: rgba(14,14,10,0.98);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      padding: 1.2rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .admin-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 300;
+      color: #fff;
+      letter-spacing: 0.12em;
+    }
+
+    .admin-brand em { color: var(--gold-light); font-style: italic; }
+
+    .admin-badge {
+      font-size: 0.58rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.3);
+      padding: 0.3rem 0.8rem;
+      border-radius: 2px;
+    }
+
+    /* ── LOGIN ── */
+    .login-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100vh - 70px);
+      padding: 2rem;
+    }
+
+    .login-box {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(201,168,76,0.2);
+      padding: 3rem 2.5rem;
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+    }
+
+    .login-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .login-sub {
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .login-input {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(201,168,76,0.2);
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      padding: 0.9rem 1rem;
+      outline: none;
+      margin-bottom: 1rem;
+      transition: border-color 0.3s;
+    }
+
+    .login-input:focus { border-color: var(--gold); }
+    .login-input::placeholder { color: rgba(255,255,255,0.25); }
+
+    .btn-gold {
+      width: 100%;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 0.9rem;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .btn-gold:hover { background: var(--gold); color: var(--dark); }
+
+    .login-error {
+      font-size: 0.68rem;
+      color: #ff6b6b;
+      margin-top: 0.8rem;
+      display: none;
+    }
+
+    /* ── ADMIN PANEL ── */
+    .admin-panel {
+      display: none;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    .panel-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: #fff;
+      margin-bottom: 0.3rem;
+    }
+
+    .panel-sub {
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .panel-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 640px) { .panel-grid { grid-template-columns: 1fr; } }
+
+    /* Calendar picker */
+    .cal-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 1.5rem;
+    }
+
+    .card-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+
+    .cal-nav-admin {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .cal-nav-admin button {
+      background: transparent;
+      border: 1px solid rgba(201,168,76,0.2);
+      color: var(--gold);
+      width: 30px; height: 30px;
+      cursor: pointer;
+      border-radius: 3px;
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
+
+    .cal-nav-admin button:hover { background: rgba(201,168,76,0.1); }
+
+    .cal-month-admin {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: #fff;
+    }
+
+    .cal-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 3px;
+    }
+
+    .cal-table th {
+      font-size: 0.52rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      padding: 0.3rem 0;
+      text-align: center;
+    }
+
+    .cal-table td {
+      height: 42px;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 0.8rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+      position: relative;
+    }
+
+    .cal-table td.empty { cursor: default; }
+    .cal-table td.past  { color: rgba(255,255,255,0.15); cursor: default; }
+
+    .cal-table td.free {
+      background: rgba(37,160,90,0.08);
+      border: 1px solid rgba(37,160,90,0.2);
+      color: rgba(255,255,255,0.7);
+    }
+
+    .cal-table td.free:hover {
+      background: rgba(220,60,60,0.15);
+      border-color: rgba(220,60,60,0.4);
+    }
+
+    .cal-table td.occupied {
+      background: rgba(220,60,60,0.15);
+      border: 1px solid rgba(220,60,60,0.4);
+      color: rgba(255,100,100,0.8);
+    }
+
+    .cal-table td.occupied:hover {
+      background: rgba(37,160,90,0.1);
+      border-color: rgba(37,160,90,0.3);
+    }
+
+    .cal-table td.today-admin {
+      border: 1px solid rgba(255,255,255,0.4) !important;
+    }
+
+    .cal-hint {
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.25);
+      margin-top: 0.8rem;
+      line-height: 1.6;
+    }
+
+    /* Booked list */
+    .booked-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .booked-list {
+      flex: 1;
+      overflow-y: auto;
+      max-height: 340px;
+    }
+
+    .booked-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .booked-item:last-child { border-bottom: none; }
+
+    .booked-date-txt {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .booked-datestr {
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.35);
+    }
+
+    .remove-btn {
+      background: transparent;
+      border: 1px solid rgba(220,60,60,0.3);
+      color: rgba(220,90,90,0.7);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      padding: 0.25rem 0.6rem;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .remove-btn:hover { background: rgba(220,60,60,0.2); color: #fff; }
+
+    .empty-list {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.25);
+      font-style: italic;
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    .clear-btn {
+      margin-top: 1rem;
+      background: transparent;
+      border: 1px solid rgba(220,60,60,0.25);
+      color: rgba(220,90,90,0.6);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.6rem 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+    }
+
+    .clear-btn:hover { background: rgba(220,60,60,0.15); color: #fff; }
+
+    /* Save status */
+    .save-status {
+      margin-top: 1.5rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-align: center;
+      color: var(--green);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .save-status.show { opacity: 1; }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      text-decoration: none;
+      margin-top: 2rem;
+      transition: color 0.3s;
+    }
+
+    .back-link:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="admin-brand"><em>Recanto</em> Joaninha</div>
+  <div class="admin-badge">Painel Admin</div>
+</header>
+
+<!-- LOGIN -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <h1 class="login-title">Acesso</h1>
+    <p class="login-sub">Painel de gerenciamento</p>
+    <input class="login-input" type="password" id="pwdInput" placeholder="Senha" autocomplete="current-password">
+    <button class="btn-gold" id="loginBtn">Entrar</button>
+    <p class="login-error" id="loginError">Senha incorreta.</p>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-panel" id="adminPanel">
+  <h2 class="panel-title">Gerenciar Disponibilidade</h2>
+  <p class="panel-sub">Clique em uma data para marcar / desmarcar como reservado</p>
+
+  <div class="panel-grid">
+    <!-- Calendar picker -->
+    <div class="cal-card">
+      <p class="card-label">📅 Calendário</p>
+      <div class="cal-nav-admin">
+        <button id="aPrev">&#8249;</button>
+        <span class="cal-month-admin" id="aMonthLabel"></span>
+        <button id="aNext">&#8250;</button>
+      </div>
+      <table class="cal-table">
+        <thead>
+          <tr><th>D</th><th>S</th><th>T</th><th>Q</th><th>Q</th><th>S</th><th>S</th></tr>
+        </thead>
+        <tbody id="aCalBody"></tbody>
+      </table>
+      <p class="cal-hint">🟢 Clique em data livre para bloquear<br>🔴 Clique em data reservada para liberar</p>
+    </div>
+
+    <!-- Booked list -->
+    <div class="booked-card">
+      <p class="card-label">🔴 Datas Reservadas</p>
+      <div class="booked-list" id="bookedList"></div>
+      <button class="clear-btn" id="clearAllBtn">Limpar todas as reservas</button>
+      <div class="save-status" id="saveStatus">✓ Salvo com sucesso</div>
+    </div>
+  </div>
+
+  <a class="back-link" href="index.html">← Voltar ao site</a>
+</div>
+
+<script>
+  // ── JSONBin.io — banco de dados na nuvem ──
+  var JSONBIN_ID    = '69e2b558aaba8821970edb11';
+  var JSONBIN_MASTER = '$2a$10$MzSg/sQ3ffKiGHedsmdYj.ypSzmNiwRn1h63nv9ca0BBu6qv6jLyO';
+  var JSONBIN_READ  = 'https://api.jsonbin.io/v3/b/' + JSONBIN_ID + '/latest';
+  var JSONBIN_WRITE = 'https://api.jsonbin.io/v3/b/' + JSONBIN_ID;
+
+  // ⚠️  TROQUE A SENHA ABAIXO antes de usar!
+  var ADMIN_PASSWORD = 'joaninha2025';
+
+  var MONTHS_PT = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho',
+                   'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  var DAYS_FULL = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+
+  var bookedDatesGlobal = [];
+  var accessKey = '';
+
+  // ── LOGIN ──
+  function tryLogin() {
+    var pwd = document.getElementById('pwdInput').value;
+    if (pwd === ADMIN_PASSWORD) {
+      document.getElementById('loginWrap').style.display = 'none';
+      document.getElementById('adminPanel').style.display = 'block';
+      loadDates();
+    } else {
+      document.getElementById('loginError').style.display = 'block';
+      document.getElementById('pwdInput').value = '';
+      document.getElementById('pwdInput').focus();
+    }
+  }
+
+  document.getElementById('loginBtn').addEventListener('click', tryLogin);
+  document.getElementById('pwdInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') tryLogin();
+  });
+
+  // ── JSONBIN ──
+  function loadDates() {
+    fetch(JSONBIN_READ)
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        bookedDatesGlobal = (data.record && data.record.reservadas) ? data.record.reservadas : [];
+        renderAdmin();
+      })
+      .catch(function(){ bookedDatesGlobal = []; renderAdmin(); });
+  }
+
+  function saveBooked(arr) {
+    var sorted = arr.filter(function(v,i,a){ return a.indexOf(v)===i; }).sort();
+    fetch(JSONBIN_WRITE, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_MASTER },
+      body: JSON.stringify({ reservadas: sorted })
+    })
+    .then(function(){
+      bookedDatesGlobal = sorted;
+      showSaved();
+      renderAdmin();
+    })
+    .catch(function(){ alert('Erro ao salvar. Verifique a chave de API no JSONBin.'); });
+  }
+
+  function showSaved() {
+    var el = document.getElementById('saveStatus');
+    el.classList.add('show');
+    setTimeout(function(){ el.classList.remove('show'); }, 2500);
+  }
+
+  // ── ADMIN CALENDAR ──
+  var aDate = new Date(); aDate.setDate(1);
+
+  function renderAdmin() {
+    var booked = bookedDatesGlobal;
+    var today  = new Date(); today.setHours(0,0,0,0);
+    var year   = aDate.getFullYear();
+    var month  = aDate.getMonth();
+
+    document.getElementById('aMonthLabel').textContent = MONTHS_PT[month] + ' ' + year;
+
+    var firstDay    = new Date(year, month, 1).getDay();
+    var daysInMonth = new Date(year, month + 1, 0).getDate();
+    var tbody = document.getElementById('aCalBody');
+    tbody.innerHTML = '';
+
+    var day = 1;
+    for (var row = 0; row < 6; row++) {
+      var tr = document.createElement('tr');
+      for (var col = 0; col < 7; col++) {
+        var td = document.createElement('td');
+        if ((row === 0 && col < firstDay) || day > daysInMonth) {
+          td.className = 'empty';
+        } else {
+          var mm      = String(month + 1).padStart(2, '0');
+          var dd      = String(day).padStart(2, '0');
+          var dateStr = year + '-' + mm + '-' + dd;
+          var cell    = new Date(year, month, day); cell.setHours(0,0,0,0);
+          var isPast  = cell < today;
+          var isOcc   = booked.includes(dateStr);
+          var isTdy   = cell.getTime() === today.getTime();
+
+          if (isPast && !isTdy) {
+            td.className = 'past';
+            td.textContent = day;
+          } else {
+            td.className = isOcc ? 'occupied' : 'free';
+            if (isTdy) td.classList.add('today-admin');
+            td.textContent = day;
+            td.title = isOcc ? (DAYS_FULL[cell.getDay()] + ' — Reservado (clique para liberar)') :
+                                (DAYS_FULL[cell.getDay()] + ' — Disponível (clique para reservar)');
+            (function(ds){ td.addEventListener('click', function(){ toggleDate(ds); }); })(dateStr);
+          }
+          day++;
+        }
+        tr.appendChild(td);
+      }
+      tbody.appendChild(tr);
+      if (day > daysInMonth) break;
+    }
+
+    renderBookedList(booked);
+  }
+
+  function toggleDate(dateStr) {
+    var booked = bookedDatesGlobal.slice();
+    if (booked.includes(dateStr)) {
+      booked = booked.filter(function(d){ return d !== dateStr; });
+    } else {
+      booked.push(dateStr);
+    }
+    saveBooked(booked);
+  }
+
+  function renderBookedList(booked) {
+    var list = document.getElementById('bookedList');
+    list.innerHTML = '';
+    if (!booked.length) {
+      list.innerHTML = '<p class="empty-list">Nenhuma data reservada ainda.</p>';
+      return;
+    }
+    var sorted = booked.slice().sort();
+    sorted.forEach(function(dateStr) {
+      var parts = dateStr.split('-').map(Number);
+      var y = parts[0], m = parts[1], d = parts[2];
+      var date = new Date(y, m - 1, d);
+      var label = DAYS_FULL[date.getDay()] + ', ' + d + ' de ' + MONTHS_PT[m-1] + ' de ' + y;
+
+      var item = document.createElement('div');
+      item.className = 'booked-item';
+      item.innerHTML =
+        '<div class="booked-date-txt">' +
+          '<span>' + label + '</span>' +
+          '<span class="booked-datestr">' + dateStr + '</span>' +
+        '</div>' +
+        '<button class="remove-btn" data-date="' + dateStr + '">Liberar</button>';
+      (function(ds){ item.querySelector('.remove-btn').addEventListener('click', function(){ toggleDate(ds); }); })(dateStr);
+      list.appendChild(item);
+    });
+  }
+
+  document.getElementById('aPrev').addEventListener('click', function() {
+    aDate.setMonth(aDate.getMonth() - 1); renderAdmin();
+  });
+  document.getElementById('aNext').addEventListener('click', function() {
+    aDate.setMonth(aDate.getMonth() + 1); renderAdmin();
+  });
+
+  document.getElementById('clearAllBtn').addEventListener('click', function() {
+    if (confirm('Tem certeza que deseja liberar TODAS as datas?')) {
+      saveBooked([]);
+    }
+  });
+</script>
+</body>
+</html>
