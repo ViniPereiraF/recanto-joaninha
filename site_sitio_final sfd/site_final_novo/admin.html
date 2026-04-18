@@ -428,6 +428,7 @@
   // ── JSONBin.io — banco de dados na nuvem ──
   var JSONBIN_ID    = '69e2b558aaba8821970edb11';
   var JSONBIN_MASTER = '$2a$10$MzSg/sQ3ffKiGHedsmdYj.ypSzmNiwRn1h63nv9ca0BBu6qv6jLyO';
+  var JSONBIN_ACCESS = '$2a$10$tMrN0uqVWCbUqs406JKHIOywmHy8SyCMPjd.kQkaIQhjsb8I1clLi';
   var JSONBIN_READ  = 'https://api.jsonbin.io/v3/b/' + JSONBIN_ID + '/latest';
   var JSONBIN_WRITE = 'https://api.jsonbin.io/v3/b/' + JSONBIN_ID;
 
@@ -475,7 +476,7 @@
     var sorted = arr.filter(function(v,i,a){ return a.indexOf(v)===i; }).sort();
     fetch(JSONBIN_WRITE, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_MASTER },
+      headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_MASTER, 'X-Access-Key': JSONBIN_ACCESS },
       body: JSON.stringify({ reservadas: sorted })
     })
     .then(function(){
